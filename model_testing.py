@@ -1,9 +1,3 @@
-# -*- coding: utf-8 -*-
-"""
-Created on Wed Oct 14 11:48:59 2020
-
-@author: nkraj
-"""
 import numpy as np
 import pandas as pd
 
@@ -20,6 +14,12 @@ from surprise.model_selection import train_test_split, GridSearchCV
 movies = pd.read_csv('movies_cleaned.csv')
 data = pd.read_csv('combined_data.csv')
 model_data = pd.read_csv('model_data.csv')
+
+# take a smaller sample of data
+data_og = data.copy()
+data = data[data['userId'] < 500]
+model_data_og = model_data.copy()
+model_data = model_data[model_data['userId'] < 500]
 
 
 ####### Optimize Parameters
@@ -138,40 +138,6 @@ def test_svd(data):
     predictions = svd_model.test(testset)
     test_mse = accuracy.mse(predictions, verbose=False)
     return test_mse
-
-def get_genre_recs(movies, title):
-    """
-    Parameters
-    ----------
-    movies : dataframe
-        A dataframe of movies with columns 'movieId', 'title', 'genres'.
-    title : string
-        A string matching the title of a movie in the 'title' column of the 
-        movies dataframe. This will be the movie to base recommendations off
-        of.
-
-    Returns
-    -------
-    rec_movies: list
-        A pandas series of the recommended movies similar to the entered title
-        based on genre.
-
-    """
-    # create a TF-IDF vectorization of genre
-    tfv = TfidfVectorizer(analyzer='word',ngram_range=(1, 2),min_df=1)
-    x = tfv.fit_transform(movies['genres'])
-
-    # compute the cosine similarities of genres
-    cosine_sim = linear_kernel(x, x)
-
-    # generate recs
-    idx = list(movies[movies['title'] == title].index)[0]
-    sim_scores = list(enumerate(cosine_sim[idx]))
-    sim_scores = sorted(sim_scores, key=lambda x: x[1], reverse=True)
-    sim_scores = sim_scores[1:21]
-    movie_indices = [i[0] for i in sim_scores]
-    rec_movies = movies['title'].iloc[movie_indices]
-    return rec_movies
 
 # create df to track performance
 performance_table = pd.DataFrame(index=['MSE'], columns=['user', 'item'])

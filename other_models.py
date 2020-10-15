@@ -28,7 +28,10 @@ movie_dict = movies.drop('genres',axis=1).set_index('movieId').to_dict()
 
 # take a smaller subset of the model_data
 model_data_og = model_data.copy()
-model_data = model_data[model_data['userId'] < 1000]
+model_data = model_data[model_data['userId'] < 500]
+
+# take a smaller subset of data dataframe
+data_small = data[data['userId'] < 500]
 
 ###### build model-based algorithms
 reader = Reader(rating_scale=(1,5))
@@ -102,7 +105,7 @@ def get_title_recs(title, n_recs=5):
         based on an item-based approach.
 
     """
-    item_pivot_table = data.pivot_table(index = ["userId"],
+    item_pivot_table = data_small.pivot_table(index = ["userId"],
                                         columns = ["title"],
                                         values = "rating",
                                         fill_value=0)
