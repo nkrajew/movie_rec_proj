@@ -32,5 +32,5 @@ For this project I built 4 different recommendation systems to suggest movies to
 ## Recommenddation Performance
 I compared the models performance using mean squared error (MSE). I felt as though this was the correct metric since the rating scale is relatively small (1 to 5). Therefore, I needed to exacerbate the weight of incorrect guesses so a poor prediction algorithm would be very apparent.
 
-            user       item       knn       svd
-  MSE  13.453443  13.011294  0.888318  0.784149
+                    user       item       knn       svd
+            MSE  13.453443  13.011294  0.888318  0.784149
