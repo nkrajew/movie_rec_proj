@@ -1,9 +1,3 @@
-# -*- coding: utf-8 -*-
-"""
-Created on Mon Oct 12 13:19:25 2020
-
-@author: nkraj
-"""
 import numpy as np
 import pandas as pd
 
@@ -21,7 +15,7 @@ movie_dict = movies.drop('genres',axis=1).set_index('movieId').to_dict()
 
 # take a smaller subset of the model_data
 model_data_og = model_data.copy()
-model_data = model_data[model_data['userId'] < 2000]
+model_data = model_data[model_data['userId'] < 1000]
     
 
 ###### build model-based algorithms
@@ -91,4 +85,4 @@ def integrate_new_ratings(model_data):
     return model_data, trainset, testset, svd_preds_list
 
 ### run below if adding a new user
-model_data, trainset, testset, svd_preds_list = integrate_new_ratings(model_data)
+# model_data, trainset, testset, svd_preds_list = integrate_new_ratings(model_data)
