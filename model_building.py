@@ -21,7 +21,7 @@ movie_dict = movies.drop('genres',axis=1).set_index('movieId').to_dict()
 
 # take a smaller subset of the model_data
 model_data_og = model_data.copy()
-model_data = model_data[model_data['userId'] < 1000]
+model_data = model_data[model_data['userId'] < 2000]
     
 
 ###### build model-based algorithms
